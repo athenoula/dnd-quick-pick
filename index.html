@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D&D Quick Pick Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a0806;
+  --bg-dark: #141008;
+  --bg-card: #1a150d;
+  --bg-card-hover: #221a0f;
+  --gold: #c9a84c;
+  --gold-bright: #e8c65a;
+  --gold-dim: #8a7234;
+  --parchment: #d4c4a0;
+  --parchment-light: #e8dcc4;
+  --text-body: #b8a88a;
+  --text-muted: #7a6b55;
+  --text-heading: #e0d0b0;
+  --border: #2a2218;
+  --border-gold: #3d3220;
+  --accent-red: #8b3a3a;
+  --accent-blue: #3a5a8b;
+  --accent-green: #3a7a4a;
+  --accent-purple: #6a3a8b;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  background: var(--bg-deep);
+  color: var(--text-body);
+  line-height: 1.7;
+  font-size: 18px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border-gold); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ─── HEADER ─── */
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.hero-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(201,168,76,0.2);
+  margin-bottom: 12px;
+}
+
+.hero-sub {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 32px;
+}
+
+/* ─── NAV ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,8,6,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  justify-content: center;
+}
+
+.nav-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 16px 24px;
+  transition: color 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--gold);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s, left 0.3s;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  color: var(--text-heading);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.section-desc {
+  font-style: italic;
+  color: var(--text-muted);
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* Dividers */
+.divider {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+}
+
+/* ─── CARDS ─── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.15s;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card.selected {
+  border-color: var(--gold);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 20px rgba(201,168,76,0.08), inset 0 0 30px rgba(201,168,76,0.03);
+}
+
+.card.selected::before { opacity: 1; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.card-icon {
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,168,76,0.06);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-heading);
+  letter-spacing: 0.04em;
+}
+
+.card-brief {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.card-check {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: transparent;
+  transition: all 0.3s;
+  background: transparent;
+}
+
+.card.selected .card-check {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+
+.card-expand {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  padding: 0 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s;
+}
+
+.card:hover .card-expand { color: var(--gold); }
+
+.card-expand .arrow {
+  transition: transform 0.3s;
+  font-size: 10px;
+}
+
+.card.open .card-expand .arrow { transform: rotate(180deg); }
+
+.card-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card.open .card-details { max-height: 800px; }
+
+.card-details-inner {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+  padding-top: 16px;
+}
+
+.card-details-inner h4 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.card-details-inner h4:first-child { margin-top: 0; }
+
+.card-details-inner p {
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+
+.card-details-inner ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0;
+}
+
+.card-details-inner li {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  padding: 3px 0 3px 18px;
+  position: relative;
+}
+
+.card-details-inner li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--gold-dim);
+  font-size: 7px;
+  top: 8px;
+}
+
+.trait-label {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ─── STARTER COMBOS ─── */
+.combos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.combo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.combo-card:hover {
+  border-color: var(--gold-dim);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.combo-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 8px;
+}
+
+.combo-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 6px;
+}
+
+.combo-detail {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── SUMMARY / FORM ─── */
+.summary-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+}
+
+.summary-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+}
+
+.summary-box h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--text-heading);
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.form-group label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.form-group input {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 10px 14px;
+  color: var(--text-heading);
+  font-family: 'Crimson Text', serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input::placeholder { color: var(--text-muted); font-style: italic; }
+.form-group input:focus { border-color: var(--gold-dim); }
+
+.selection-summary {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 16px 18px;
+  margin: 20px 0;
+  min-height: 100px;
+}
+
+.selection-summary .placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.selection-line {
+  padding: 4px 0;
+  font-size: 0.95rem;
+}
+
+.selection-line .sel-label {
+  color: var(--gold-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+.selection-line .sel-value {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border: 1px solid var(--border-gold);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg-deep);
+  border-color: var(--gold);
+}
+
+.btn-primary:hover {
+  background: var(--gold-bright);
+  box-shadow: 0 0 20px rgba(201,168,76,0.2);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+  color: var(--text-heading);
+  border-color: var(--text-muted);
+}
+
+.copied-msg {
+  text-align: center;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.copied-msg.show { opacity: 1; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .combos-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .nav-link { padding: 12px 14px; font-size: 0.65rem; }
+  .hero { padding: 60px 20px 40px; }
+  .section { padding: 40px 16px 30px; }
+  .summary-box { padding: 24px 18px; }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  opacity: 0;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.02s; }
+.card:nth-child(2) { animation-delay: 0.04s; }
+.card:nth-child(3) { animation-delay: 0.06s; }
+.card:nth-child(4) { animation-delay: 0.08s; }
+.card:nth-child(5) { animation-delay: 0.10s; }
+.card:nth-child(6) { animation-delay: 0.12s; }
+.card:nth-child(7) { animation-delay: 0.14s; }
+.card:nth-child(8) { animation-delay: 0.16s; }
+.card:nth-child(9) { animation-delay: 0.18s; }
+.card:nth-child(10) { animation-delay: 0.20s; }
+.card:nth-child(11) { animation-delay: 0.22s; }
+.card:nth-child(12) { animation-delay: 0.24s; }
+.card:nth-child(13) { animation-delay: 0.26s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <span class="hero-icon">&#x2694;&#xFE0F;</span>
+  <h1>D&D Quick Pick</h1>
+  <p class="hero-sub">A guide for new adventurers &mdash; choose your class, race and background, then send your picks to the DM.</p>
+</header>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a href="#combos" class="nav-link">Starter Combos</a>
+    <a href="#classes" class="nav-link">Classes</a>
+    <a href="#races" class="nav-link">Races</a>
+    <a href="#backgrounds" class="nav-link">Backgrounds</a>
+    <a href="#summary" class="nav-link">Summary</a>
+  </div>
+</nav>
+
+<!-- STARTER COMBOS -->
+<section class="section" id="combos">
+  <div class="section-header">
+    <div class="section-label">Recommended</div>
+    <h2>Starter Combos</h2>
+    <p class="section-desc">Not sure where to begin? Click one of these tried-and-true combinations to auto-fill your picks.</p>
+  </div>
+  <div class="combos-grid">
+    <div class="combo-card" onclick="applyCombo('Fighter','Human','Soldier')">
+      <div class="combo-label">Easy Beginner</div>
+      <div class="combo-name">Fighter + Human + Soldier</div>
+      <div class="combo-detail">Simple, strong, effective</div>
+    </div>
+    <div class="combo-card" onclick="applyCombo('Paladin','Half-Elf','Noble')">
+      <div class="combo-label">Classic Hero</div>
+      <div class="combo-name">Paladin + Half-Elf + Noble</div>
+      <div class="combo-detail">Shining knight archetype</div>
+    </div>
+    <div class="combo-card" onclick="applyCombo('Rogue','Halfling','Criminal')">
+      <div class="combo-label">Sneaky Rogue</div>
+      <div class="combo-name">Rogue + Halfling + Criminal</div>
+      <div class="combo-detail">Stealth and trickery</div>
+    </div>
+    <div class="combo-card" onclick="applyCombo('Wizard','Elf','Sage')">
+      <div class="combo-label">Powerful Mage</div>
+      <div class="combo-name">Wizard + Elf + Sage</div>
+      <div class="combo-detail">Arcane mastery</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLASSES -->
+<section class="section" id="classes">
+  <div class="section-header">
+    <div class="section-label">Step 1</div>
+    <h2>Choose Your Class</h2>
+    <p class="section-desc">Your class defines what you do in the game &mdash; how you fight, what abilities you have, and your role in the party.</p>
+  </div>
+  <div class="card-grid" id="class-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RACES -->
+<section class="section" id="races">
+  <div class="section-header">
+    <div class="section-label">Step 2</div>
+    <h2>Choose Your Race</h2>
+    <p class="section-desc">Your race determines what you are &mdash; your physical traits, innate abilities and the culture you come from.</p>
+  </div>
+  <div class="card-grid" id="race-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BACKGROUNDS -->
+<section class="section" id="backgrounds">
+  <div class="section-header">
+    <div class="section-label">Step 3</div>
+    <h2>Choose Your Background</h2>
+    <p class="section-desc">Your background is where you came from before you became an adventurer &mdash; it shapes your skills and story.</p>
+  </div>
+  <div class="card-grid" id="bg-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUMMARY -->
+<section class="summary-section" id="summary">
+  <div class="section-header">
+    <div class="section-label">Final Step</div>
+    <h2>Send Your Picks</h2>
+    <p class="section-desc">Enter your details, then copy everything below and paste it to your DM.</p>
+  </div>
+  <div class="summary-box">
+    <h3>Your Character</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name (Player)</label>
+        <input type="text" id="player-name" placeholder="e.g. Alex">
+      </div>
+      <div class="form-group">
+        <label>Character Name</label>
+        <input type="text" id="char-name" placeholder="e.g. Thordak the Brave">
+      </div>
+    </div>
+    <div class="selection-summary" id="selection-summary">
+      <div class="placeholder">Make your selections above&hellip;</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="resetAll()">Reset All</button>
+      <button class="btn btn-primary" onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+    <div class="copied-msg" id="copied-msg">Copied to clipboard!</div>
+  </div>
+</section>
+
+<script>
+// ─── DATA ───
+const classes = [
+  {
+    name: "Barbarian", icon: "&#x1F4A2;",
+    brief: "A rage-fuelled fighter who charges into battle and shrugs off punishment through sheer toughness.",
+    details: {
+      "Overview": "Barbarians are fierce warriors from the edge of civilisation. They channel a primal fury called Rage that lets them shrug off blows that would fell lesser warriors and strike with devastating power. They rely on heavy weapons, raw strength and an instinctive battle sense rather than formal training.",
+      "Hit Dice": "d12 — the highest in the game. Barbarians are the toughest class, able to absorb enormous amounts of damage.",
+      "Key Ability": "<span class='trait-label'>Rage</span> — When you enter a Rage (bonus action, several times per day), you gain resistance to physical damage (bludgeoning, piercing and slashing), bonus damage on Strength-based melee attacks, and advantage on Strength checks and saves. You cannot cast spells while raging.",
+      "Primary Stats": "Strength and Constitution. You want to hit hard and take hits.",
+      "Armour & Weapons": "Light and medium armour, shields, and all weapons. Barbarians also get <span class='trait-label'>Unarmoured Defence</span> — when wearing no armour your AC equals 10 + Dex modifier + Con modifier, so you can fight bare-chested and still be tough to hit.",
+      "Playstyle": "Run to the front line, Rage, and start swinging. You are the party's damage sponge and heavy hitter. At higher levels you gain Reckless Attack (advantage on attacks at the cost of enemies having advantage on you), Danger Sense (advantage on Dex saves you can see), and eventually Brutal Critical for massive critical hit damage.",
+      "Good For": "Players who want a simple, aggressive character who charges in and deals massive melee damage."
+    }
+  },
+  {
+    name: "Bard", icon: "&#x1F3B6;",
+    brief: "A charming performer who weaves magic through music and stories — equally at home in combat or conversation.",
+    details: {
+      "Overview": "Bards are versatile spellcasters who draw on the power of music, oration and performance to weave magic. They are the ultimate jack-of-all-trades: capable healers, decent fighters, powerful support casters and the best social characters in the game.",
+      "Hit Dice": "d8 — moderate toughness. You're not a front-line tank but you can hold your own.",
+      "Key Ability": "<span class='trait-label'>Bardic Inspiration</span> — A number of times per day equal to your Charisma modifier, you can give an ally an Inspiration die (starting at d6, growing as you level). They can add this to an attack roll, ability check, or saving throw. This is one of the most powerful support abilities in the game.",
+      "Primary Stats": "Charisma (for spells and social skills), then Dexterity and Constitution.",
+      "Spellcasting": "Bards are full casters using Charisma. Their spell list focuses on enchantment, illusion, healing and utility. At level 10 you get <span class='trait-label'>Magical Secrets</span> — you can steal spells from any other class's list.",
+      "Jack of All Trades": "At 2nd level you add half your proficiency bonus to every ability check you aren't already proficient in. This makes Bards surprisingly good at everything.",
+      "Good For": "Players who want to be the party's social leader and support caster, buffing allies and controlling encounters through charm and cleverness."
+    }
+  },
+  {
+    name: "Cleric", icon: "&#x271D;&#xFE0F;",
+    brief: "A devoted servant of a god who heals allies, smites enemies and channels divine power.",
+    details: {
+      "Overview": "Clerics are divine spellcasters empowered by their faith in a deity. Far from being simple healers, Clerics are one of the most versatile classes in the game. Depending on your Divine Domain, you might be a heavily-armoured front-line warrior, a devastating damage dealer, or a masterful support caster.",
+      "Hit Dice": "d8 — and many domains grant heavy armour proficiency, making you surprisingly durable.",
+      "Key Ability": "<span class='trait-label'>Channel Divinity</span> — Starting at 2nd level you can channel divine energy for powerful effects. Every Cleric gets Turn Undead (force undead creatures to flee), plus a domain-specific Channel Divinity option.",
+      "Primary Stats": "Wisdom (spellcasting), then Constitution. Strength or Dexterity depending on your build.",
+      "Spellcasting": "Clerics are full casters using Wisdom. Uniquely, Clerics know their entire spell list and prepare spells each day — giving you incredible flexibility. Your domain grants you always-prepared bonus spells.",
+      "Divine Domains": "Your domain (chosen at level 1) dramatically shapes your Cleric: Life (best healer), Light (damage and fire), War (front-line fighter), Knowledge, Nature, Tempest, Trickery, and more.",
+      "Good For": "Players who want to be the party's backbone — healing, supporting, and turning the tide of battle with divine power. The most versatile class in the game."
+    }
+  },
+  {
+    name: "Druid", icon: "&#x1F33F;",
+    brief: "A nature priest who commands the elements, summons animals and can shapeshift into wild beasts.",
+    details: {
+      "Overview": "Druids are guardians of the natural world who draw their magic from the forces of nature itself. Their signature ability is Wild Shape — the power to physically transform into animals. Beyond that, they have a powerful spell list full of area control, healing and summoning.",
+      "Hit Dice": "d8 — but Wild Shape gives you the beast's hit points as a buffer on top of your own, making you deceptively tanky.",
+      "Key Ability": "<span class='trait-label'>Wild Shape</span> — Starting at 2nd level, twice per short rest, you can transform into a beast you've seen. You gain the beast's physical stats and hit points while keeping your mental stats and class features. At low levels you might become a wolf or bear; at higher levels, an elemental.",
+      "Primary Stats": "Wisdom (spellcasting), then Constitution. Your physical stats don't matter much because Wild Shape replaces them.",
+      "Spellcasting": "Druids are full casters using Wisdom. Like Clerics, they know their full list and prepare spells daily. The Druid spell list excels at battlefield control (Entangle, Spike Growth), healing (Healing Word, Heal), and elemental damage (Call Lightning).",
+      "Druidic Circles": "Circle of the Land enhances your spellcasting with extra spell slots and spells. Circle of the Moon dramatically boosts Wild Shape, letting you turn into stronger beasts earlier and eventually become elementals.",
+      "Good For": "Players who love nature themes, shapeshifting, or want a versatile caster who can also serve as a front-line combatant via Wild Shape."
+    }
+  },
+  {
+    name: "Fighter", icon: "&#x2694;&#xFE0F;",
+    brief: "A versatile, reliable weapon master — the easiest class to pick up and the most flexible in combat.",
+    details: {
+      "Overview": "Fighters are the quintessential warriors — masters of martial combat who excel with every weapon and armour type. They are the most straightforward class to play, making them perfect for beginners, but their tactical depth rewards experienced players too. No class gets more attacks or more Ability Score Improvements.",
+      "Hit Dice": "d10 — very durable, second only to Barbarians.",
+      "Key Abilities": "<span class='trait-label'>Fighting Style</span> (chosen at level 1) gives a permanent combat bonus: Archery (+2 to ranged attacks), Defence (+1 AC), Dueling (+2 damage with one-handed weapons), Great Weapon Fighting (reroll low damage with two-handers), and more. <span class='trait-label'>Second Wind</span> lets you heal yourself as a bonus action once per short rest. <span class='trait-label'>Action Surge</span> (level 2) gives you an extra full action once per short rest — devastating for burst damage.",
+      "Primary Stats": "Strength or Dexterity (depending on weapon choice), then Constitution.",
+      "Extra Attacks": "Fighters get Extra Attack at 5th level (2 attacks), and uniquely get more at 11th (3 attacks) and 20th (4 attacks). No other class attacks this often.",
+      "Martial Archetypes": "Champion is the simplest (improved critical hits). Battle Master adds tactical manoeuvres (trip, disarm, riposte). Eldritch Knight adds spellcasting for a magic-warrior hybrid.",
+      "Good For": "New players who want a reliable, effective character without complex spell management. Also great for veterans who appreciate tactical flexibility."
+    }
+  },
+  {
+    name: "Monk", icon: "&#x1F94B;",
+    brief: "A martial arts expert who fights with hands and feet, moves at lightning speed and channels inner energy.",
+    details: {
+      "Overview": "Monks are martial artists who harness an internal energy called Ki to perform supernatural feats. They are fast, mobile strikers who weave in and out of combat, stunning enemies and deflecting attacks. They don't rely on armour or weapons — their body is their weapon.",
+      "Hit Dice": "d8 — lower than other martial classes, but your high mobility and defensive abilities compensate.",
+      "Key Abilities": "<span class='trait-label'>Martial Arts</span> — you can use Dexterity for unarmed strikes and monk weapons, your unarmed damage increases as you level (d4 to d10), and you get a bonus unarmed strike after attacking. <span class='trait-label'>Ki</span> — a pool of points (equal to Monk level) that fuel abilities: Flurry of Blows (two bonus unarmed strikes), Patient Defence (Dodge as bonus action), Step of the Wind (Dash or Disengage as bonus action).",
+      "Primary Stats": "Dexterity and Wisdom. Dexterity for attacks and AC, Wisdom for Ki save DC and Unarmoured Defence (10 + Dex + Wis).",
+      "Unarmoured Movement": "Your speed increases as you level (+10 ft at 2nd, up to +30 ft). You eventually can run on walls and across water.",
+      "Stunning Strike": "At 5th level, when you hit with a melee attack you can spend 1 Ki to attempt to stun the target. A stunned creature can't act and all attacks against it have advantage. This is one of the most impactful abilities in the game.",
+      "Good For": "Players who want a fast, agile martial artist who darts around the battlefield stunning enemies and dealing flurries of blows."
+    }
+  },
+  {
+    name: "Paladin", icon: "&#x1F6E1;&#xFE0F;",
+    brief: "A holy warrior bound by an oath — heavily armoured, able to heal, and devastating against evil creatures.",
+    details: {
+      "Overview": "Paladins are holy warriors who swear a sacred oath and are granted divine magic in return. They combine heavy armour and martial prowess with healing and smiting power. Their Divine Smite makes them one of the highest single-target damage dealers in the game, and their auras protect the entire party.",
+      "Hit Dice": "d10 — tough and durable, made even more so by heavy armour and self-healing.",
+      "Key Abilities": "<span class='trait-label'>Divine Smite</span> — when you hit with a melee weapon, you can expend a spell slot to deal extra radiant damage (2d8 for a 1st-level slot, +1d8 per higher slot level, and +1d8 more against undead or fiends). This requires no action and you choose to smite after you know you've hit, making it incredibly efficient. <span class='trait-label'>Lay on Hands</span> — a pool of healing equal to 5 × your Paladin level. You can heal allies by touch, spending as many points as you like.",
+      "Primary Stats": "Strength and Charisma. Strength for melee attacks, Charisma for spellcasting and your powerful Aura of Protection.",
+      "Aura of Protection": "At 6th level, you and all allies within 10 feet add your Charisma modifier to all saving throws. This is one of the strongest passive abilities in the game.",
+      "Sacred Oaths": "Your oath (chosen at 3rd level) defines your Paladin's code: Devotion (classic holy knight), Ancients (nature-themed protector), Vengeance (relentless hunter of evil).",
+      "Good For": "Players who want to be a righteous, armoured champion who protects the party, heals allies, and annihilates evil with massive burst damage."
+    }
+  },
+  {
+    name: "Ranger", icon: "&#x1F3F9;",
+    brief: "A wilderness hunter skilled with a bow, tracking enemies and fighting with a favoured prey in their element.",
+    details: {
+      "Overview": "Rangers are skilled hunters and trackers who combine martial ability with nature magic. They are experts in navigating and surviving the wild, and they specialise in fighting particular types of enemies. Rangers blend weapon attacks with spells for a versatile combat style.",
+      "Hit Dice": "d10 — solid durability for a half-caster.",
+      "Key Abilities": "<span class='trait-label'>Favoured Enemy</span> — you choose a type of creature (such as undead, dragons, or beasts) and gain bonuses to tracking and knowledge about them. <span class='trait-label'>Natural Explorer</span> — you choose a terrain type and gain significant benefits when travelling through it: you can't get lost, you find twice as much food, and your group moves stealthily at normal pace.",
+      "Primary Stats": "Dexterity (for ranged attacks and AC), then Wisdom (for spellcasting).",
+      "Spellcasting": "Rangers are half-casters with a nature-themed spell list. Key spells include Hunter's Mark (bonus damage on a target), Goodberry (emergency healing), Pass Without Trace (+10 to stealth for the whole party), and Conjure Animals.",
+      "Ranger Archetypes": "Hunter grants combat abilities against groups or powerful single foes. Beast Master gives you an animal companion that fights alongside you.",
+      "Fighting Style": "Like Fighters, Rangers get a Fighting Style at 2nd level. Archery (+2 to ranged attacks) is the most popular choice.",
+      "Good For": "Players who want a nature-themed warrior-scout, especially if they like the fantasy of a skilled archer or a warrior with an animal companion."
+    }
+  },
+  {
+    name: "Rogue", icon: "&#x1F5E1;&#xFE0F;",
+    brief: "A cunning trickster who deals massive burst damage from the shadows and excels at stealth and thievery.",
+    details: {
+      "Overview": "Rogues are masters of stealth, skill and precision strikes. They deal devastating burst damage through Sneak Attack, and outside of combat they are the most skilled characters in the game with the most proficiencies and expertise. Rogues excel at scouting, infiltration and disabling traps.",
+      "Hit Dice": "d8 — but Rogues avoid damage through evasion and cunning rather than absorbing it.",
+      "Key Abilities": "<span class='trait-label'>Sneak Attack</span> — once per turn, when you hit with a finesse or ranged weapon and have advantage (or an ally is within 5 ft of your target), you deal extra damage: 1d6 at 1st level, scaling to 10d6 at 19th. This is the Rogue's primary damage source. <span class='trait-label'>Expertise</span> — you double your proficiency bonus in two skills at 1st level and two more at 6th, making you exceptional at your chosen skills. <span class='trait-label'>Cunning Action</span> — at 2nd level you can Dash, Disengage, or Hide as a bonus action every turn.",
+      "Primary Stats": "Dexterity (attacks, AC, stealth, and many key skills), then Constitution or Charisma.",
+      "Uncanny Dodge & Evasion": "At 5th level, you can halve damage from an attack you can see (reaction). At 7th, you take no damage on a successful Dex save, half on a fail. These make Rogues surprisingly resilient.",
+      "Roguish Archetypes": "Thief (fast hands, second-story work, use items as bonus action). Assassin (devastating surprise-round damage, infiltration expertise). Arcane Trickster (adds limited wizard spells for magical trickery).",
+      "Good For": "Players who want a skill-focused, stealthy character who scouts ahead, picks locks, and deals lethal precision strikes in combat."
+    }
+  },
+  {
+    name: "Sorcerer", icon: "&#x2728;",
+    brief: "A spellcaster with raw magical power in their blood — fewer spells than a wizard but more naturally gifted.",
+    details: {
+      "Overview": "Sorcerers are spellcasters whose magic comes from within — an innate gift inherited through bloodline, cosmic exposure, or sheer force of will. Unlike Wizards who study magic, Sorcerers feel it. They know fewer spells but can twist and enhance their spells in ways no other caster can.",
+      "Hit Dice": "d6 — the lowest, tied with Wizard. You are fragile and need to stay out of melee.",
+      "Key Ability": "<span class='trait-label'>Metamagic</span> — Starting at 3rd level, you gain Sorcery Points and can spend them to modify your spells: Twinned Spell (target two creatures with a single-target spell), Quickened Spell (cast a spell as a bonus action), Subtle Spell (cast without verbal or somatic components — undetectable), Heightened Spell (impose disadvantage on a target's saving throw), and more.",
+      "Primary Stats": "Charisma (spellcasting), then Constitution (for concentration and survival).",
+      "Spellcasting": "Sorcerers are full Charisma casters. They know a limited number of spells (15 at level 20) and cannot change them easily — but Metamagic lets you do more with less. Sorcerers excel at blasting (Fireball, Lightning Bolt) and control (Hold Person, Hypnotic Pattern).",
+      "Sorcerous Origins": "Draconic Bloodline (extra HP, elemental damage bonus, eventually wings). Wild Magic (chaotic random effects on spells — unpredictable but fun).",
+      "Good For": "Players who want a powerful offensive spellcaster with unique spell-enhancing abilities and a dramatic backstory about innate magical power."
+    }
+  },
+  {
+    name: "Warlock", icon: "&#x1F47F;",
+    brief: "A magic-user who made a deal with a dark patron — limited but always-refreshing spells and eerie eldritch blasts.",
+    details: {
+      "Overview": "Warlocks gain their magic through a bargain with a powerful otherworldly being — a fiend, an archfey, a Great Old One, or something stranger. They have a unique spellcasting system: very few spell slots (2 for most of your career), but they recharge on a short rest instead of a long rest. Combined with at-will Eldritch Blast and customisable Invocations, Warlocks are reliable and versatile.",
+      "Hit Dice": "d8 — slightly tougher than other full casters.",
+      "Key Abilities": "<span class='trait-label'>Eldritch Blast</span> — a cantrip that is the Warlock's signature attack. It deals 1d10 force damage per beam (gaining more beams at 5th, 11th, and 17th level). With the Agonising Blast invocation, you add Charisma to each beam's damage. This is consistently one of the best damage cantrips in the game. <span class='trait-label'>Pact Magic</span> — your spell slots are always cast at the highest level available and recharge on a short rest.",
+      "Primary Stats": "Charisma (spellcasting), then Constitution.",
+      "Eldritch Invocations": "Starting at 2nd level, you gain customisable abilities: see in magical darkness, read any language, disguise yourself at will, see through your familiar's eyes, and many more. These make every Warlock unique.",
+      "Pact Boons": "At 3rd level, choose Pact of the Chain (powerful familiar), Pact of the Blade (magical weapon, melee Warlock), or Pact of the Tome (extra cantrips and ritual casting).",
+      "Good For": "Players who want a reliable, customisable spellcaster with a dark flavour, great consistent damage, and an interesting patron relationship to roleplay."
+    }
+  },
+  {
+    name: "Wizard", icon: "&#x1F4D6;",
+    brief: "The ultimate scholar of magic — the widest spell list in the game, but fragile and needs preparation.",
+    details: {
+      "Overview": "Wizards are the archetypal spellcasters — scholars who learn magic through rigorous study. They have the largest spell list in D&D and can learn new spells by copying them from scrolls and other spellbooks. A well-prepared Wizard has a solution for almost any problem.",
+      "Hit Dice": "d6 — the lowest in the game, tied with Sorcerer. You are very fragile.",
+      "Key Ability": "<span class='trait-label'>Spellbook</span> — Wizards learn spells by adding them to their spellbook. You start with 6 first-level spells and learn 2 more per level. Crucially, you can also copy spells from scrolls or other Wizards' spellbooks. Over time your spellbook becomes an enormous library of options. Each day you prepare a subset to have available.",
+      "Primary Stats": "Intelligence (spellcasting), then Constitution (for concentration and hit points).",
+      "Spellcasting": "Wizards are full Intelligence casters with the broadest spell list. They excel at damage (Fireball, Meteor Swarm), control (Web, Wall of Force), utility (Fly, Teleportation Circle), and battlefield manipulation. Ritual Casting lets you cast certain spells without expending a slot if you have 10 extra minutes.",
+      "Arcane Traditions": "Evocation (blast specialist — can shape spells around allies), Abjuration (protective ward, best defensive Wizard), Divination (Portent — replace any roll with a pre-rolled die, incredibly powerful), Necromancy, Illusion, Conjuration, and more.",
+      "Arcane Recovery": "Once per day after a short rest, you can recover spent spell slots up to half your Wizard level. This keeps you casting more than other full casters.",
+      "Good For": "Players who love the idea of an all-knowing magic scholar with the widest toolkit in the game. Requires more management (spell preparation, spellbook) but rewards it handsomely."
+    }
+  }
+];
+
+const races = [
+  {
+    name: "Dragonborn", icon: "&#x1F432;",
+    brief: "Proud dragon-descended humanoids who can breathe fire (or another element) as a weapon.",
+    details: {
+      "Overview": "Dragonborn are tall, proud humanoids who resemble dragons — scaled skin, a broad build, and a powerful presence. They were born from dragons or hatched from dragon eggs and carry the blood of dragonkind in their veins. They stand over 6 feet tall and are heavily built.",
+      "Ability Scores": "+2 Strength, +1 Charisma. Naturally strong and commanding.",
+      "Draconic Ancestry": "You choose a dragon type (Black, Blue, Brass, Bronze, Copper, Gold, Green, Red, Silver, or White). This determines your <span class='trait-label'>Breath Weapon</span> damage type and resistance: Red/Gold/Brass = fire, Blue/Bronze = lightning, White/Silver = cold, Black/Copper = acid, Green = poison.",
+      "Breath Weapon": "As an action, you exhale destructive energy in a line or cone (depending on your dragon type). Creatures in the area must make a saving throw or take damage. Damage starts at 2d6 and scales with your level.",
+      "Damage Resistance": "You have resistance to the damage type associated with your ancestry — you take half damage from it.",
+      "Other Traits": "Size: Medium. Speed: 30 ft. Languages: Common, Draconic.",
+      "Good For": "Players who want to play a commanding, dragon-themed warrior. Pairs excellently with Paladin, Fighter or Sorcerer."
+    }
+  },
+  {
+    name: "Dwarf", icon: "&#x26CF;&#xFE0F;",
+    brief: "Tough, stubborn mountain folk with a resistance to poison and a natural gift for stonework and combat.",
+    details: {
+      "Overview": "Dwarves are short, stocky and tough — standing around 4 to 5 feet tall but weighing as much as a human. They are known for their craftsmanship, love of mining and brewing, and their stubborn determination. Dwarves live for centuries and have long memories.",
+      "Ability Scores": "+2 Constitution. Subraces add more: Hill Dwarf gets +1 Wisdom, Mountain Dwarf gets +2 Strength.",
+      "Darkvision": "You can see 60 feet in dim light as if bright, and in darkness as if dim light (greyscale only).",
+      "Dwarven Resilience": "<span class='trait-label'>Advantage on saving throws against poison, and resistance to poison damage.</span> One of the best racial defensive traits in the game.",
+      "Dwarven Combat Training": "Proficiency with battleaxe, handaxe, light hammer and warhammer regardless of class.",
+      "Stonecunning": "Whenever you make an Intelligence (History) check related to stonework, you add double your proficiency bonus.",
+      "Subraces": "<span class='trait-label'>Hill Dwarf</span> — +1 Wisdom, +1 extra hit point per level (very tanky). Excellent for Clerics and Druids. <span class='trait-label'>Mountain Dwarf</span> — +2 Strength, proficiency with light and medium armour. One of the best martial race options, and lets casters wear armour they normally can't.",
+      "Good For": "Players who want a durable, resilient character. Hill Dwarf Cleric and Mountain Dwarf Fighter are iconic, reliable choices."
+    }
+  },
+  {
+    name: "Elf", icon: "&#x1F9DD;",
+    brief: "Ancient, graceful beings with sharp senses and a natural resistance to sleep and charm.",
+    details: {
+      "Overview": "Elves are graceful, long-lived beings who can live for over 700 years. They are slender, standing 5 to 6 feet tall, and possess an otherworldly beauty and agility. Elves are deeply connected to nature and magic, and their long lifespans give them a patient, measured perspective.",
+      "Ability Scores": "+2 Dexterity. Subraces add: High Elf +1 Intelligence, Wood Elf +1 Wisdom, Dark Elf (Drow) +1 Charisma.",
+      "Darkvision": "60 feet.",
+      "Keen Senses": "Proficiency in the Perception skill (the most commonly used skill in the game).",
+      "Fey Ancestry": "<span class='trait-label'>Advantage on saving throws against being charmed, and magic can't put you to sleep.</span> Extremely useful against many monster abilities.",
+      "Trance": "Elves don't need to sleep. Instead, they meditate for 4 hours, gaining the same benefit as 8 hours of sleep.",
+      "Subraces": "<span class='trait-label'>High Elf</span> — +1 Intelligence, one Wizard cantrip of your choice, extra language. Great for Wizards. <span class='trait-label'>Wood Elf</span> — +1 Wisdom, 35 ft speed (fastest standard race), can hide in light natural cover. Superb Rangers and Druids. <span class='trait-label'>Dark Elf (Drow)</span> — +1 Charisma, 120 ft Darkvision, Faerie Fire and Darkness spells. Powerful but with Sunlight Sensitivity.",
+      "Good For": "Players who want an agile, perceptive character with strong defences against mind-affecting magic. Elves pair well with nearly any Dexterity-based class."
+    }
+  },
+  {
+    name: "Gnome", icon: "&#x1F9D9;",
+    brief: "Tiny, endlessly curious tinkerers with a knack for illusion magic and resistance to mental effects.",
+    details: {
+      "Overview": "Gnomes are the smallest of the standard races, standing 3 to 4 feet tall. They are endlessly curious, inventive and enthusiastic, with a love of life that borders on manic. Gnomes live around 350 to 500 years and spend much of that time tinkering, experimenting and exploring.",
+      "Ability Scores": "+2 Intelligence. Rock Gnome gets +1 Constitution, Forest Gnome gets +1 Dexterity.",
+      "Darkvision": "60 feet.",
+      "Gnome Cunning": "<span class='trait-label'>Advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</span> This is one of the strongest racial traits in the game — it protects you against the vast majority of dangerous spells.",
+      "Size": "Small (3-4 ft). This means you can't use Heavy weapons (greatsword, greataxe) without disadvantage, but you can move through the space of larger creatures.",
+      "Subraces": "<span class='trait-label'>Rock Gnome</span> — +1 Constitution, proficiency with tinker's tools, and you can build tiny clockwork devices (a toy, fire starter, or music box). Fun for roleplay and creativity. <span class='trait-label'>Forest Gnome</span> — +1 Dexterity, the Minor Illusion cantrip for free, and you can communicate simple ideas with Small or smaller beasts.",
+      "Good For": "Players who want a quirky, clever character with outstanding magical defences. Forest Gnome makes an excellent Wizard, and Gnome Cunning is universally useful."
+    }
+  },
+  {
+    name: "Half-Elf", icon: "&#x1F9DA;",
+    brief: "The most versatile pick — inheriting elven charm and human adaptability, great for social characters.",
+    details: {
+      "Overview": "Half-Elves walk between two worlds, combining the best traits of their human and elven heritage. They inherit the elven grace and longevity (living around 180 years) with human ambition and versatility. Half-Elves are natural diplomats, able to get along with almost anyone.",
+      "Ability Scores": "<span class='trait-label'>+2 Charisma, and +1 to two other ability scores of your choice.</span> This is the most flexible stat distribution of any race, letting you customise for any class.",
+      "Darkvision": "60 feet.",
+      "Fey Ancestry": "Advantage on saving throws against being charmed, and magic can't put you to sleep (same as Elves).",
+      "Skill Versatility": "<span class='trait-label'>Proficiency in two skills of your choice.</span> Combined with their flexible stats, this makes Half-Elves the most versatile race in the Player's Handbook.",
+      "Languages": "Common, Elvish, and one extra language of your choice.",
+      "Other Traits": "Size: Medium (roughly human-sized). Speed: 30 ft.",
+      "Good For": "Players who want maximum flexibility. Half-Elves are arguably the strongest overall race in the PHB. They are the ideal choice for Charisma-based classes (Bard, Paladin, Sorcerer, Warlock) and work well with virtually any class thanks to their flexible ability scores."
+    }
+  },
+  {
+    name: "Half-Orc", icon: "&#x1F9CC;",
+    brief: "Powerful and intimidating warriors who can survive a killing blow once per day through sheer grit.",
+    details: {
+      "Overview": "Half-Orcs combine the strength and toughness of their orc parentage with human versatility. They are large, powerful, and often intimidating, standing well over 6 feet tall. Despite the prejudice they often face, Half-Orcs are deeply passionate and fiercely loyal.",
+      "Ability Scores": "+2 Strength, +1 Constitution. Built for front-line combat.",
+      "Darkvision": "60 feet.",
+      "Menacing": "Proficiency in the Intimidation skill. Half-Orcs are naturally commanding.",
+      "Relentless Endurance": "<span class='trait-label'>When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. Once per long rest.</span> This is a life-saving ability that effectively gives you a second chance in every major fight.",
+      "Savage Attacks": "<span class='trait-label'>When you score a critical hit with a melee weapon, you roll one additional damage die.</span> Combined with a greataxe (d12) or Barbarian's Brutal Critical, this can produce devastating critical hits.",
+      "Other Traits": "Size: Medium (6-7 ft). Speed: 30 ft. Languages: Common, Orc.",
+      "Good For": "Players who want to play a powerful, aggressive melee character. Half-Orc Barbarian is one of the most iconic and effective combinations in D&D — Relentless Endurance and Savage Attacks synergise perfectly with Rage and Brutal Critical."
+    }
+  },
+  {
+    name: "Halfling", icon: "&#x1F340;",
+    brief: "Cheerful, lucky small folk who can reroll unlucky dice — surprisingly great at dodging danger.",
+    details: {
+      "Overview": "Halflings are small, cheerful folk who stand about 3 feet tall. They are known for their good nature, their love of comfort and simple pleasures, and an uncanny knack for avoiding danger. Halflings are practical, resourceful and surprisingly brave when the need arises.",
+      "Ability Scores": "+2 Dexterity. Lightfoot gets +1 Charisma, Stout gets +1 Constitution.",
+      "Lucky": "<span class='trait-label'>When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</span> This is one of the most consistently useful racial traits in the game — you will never critically fumble an important roll again.",
+      "Brave": "Advantage on saving throws against being frightened.",
+      "Halfling Nimbleness": "You can move through the space of any creature that is a size larger than you. Useful for navigating crowded battlefields.",
+      "Size": "Small (about 3 ft). Can't effectively use Heavy weapons.",
+      "Subraces": "<span class='trait-label'>Lightfoot</span> — +1 Charisma, and you can hide behind a creature one size larger than you (Naturally Stealthy). Ideal for Rogues. <span class='trait-label'>Stout</span> — +1 Constitution, advantage on saves against poison and resistance to poison damage (similar to Dwarves). Durable and reliable.",
+      "Good For": "Players who want a lucky, nimble character who always seems to dodge disaster. Lightfoot Halfling Rogue is a classic combination. The Lucky trait benefits every class."
+    }
+  },
+  {
+    name: "Human", icon: "&#x1F9D1;",
+    brief: "The jack-of-all-trades — gets a bonus to every stat and an extra feat, making any class work well.",
+    details: {
+      "Overview": "Humans are the most common and adaptable race in D&D. They lack the special abilities of other races but compensate with sheer versatility. Humans are ambitious, diverse and driven — and they make excellent members of any class.",
+      "Ability Scores (Standard)": "+1 to all six ability scores. No other race improves every stat, making Humans work with any class and any build.",
+      "Variant Human (Optional Rule)": "<span class='trait-label'>+1 to two ability scores of your choice, one extra skill proficiency, and one Feat at 1st level.</span> Variant Human is widely considered one of the strongest race options in the game because Feats (like Great Weapon Master, Sharpshooter, or Lucky) are enormously powerful abilities that most characters don't get until level 4.",
+      "Languages": "Common and one extra language of your choice.",
+      "Other Traits": "Size: Medium. Speed: 30 ft.",
+      "Why Variant Human?": "Getting a Feat at level 1 can define your entire character. A Variant Human Fighter with Great Weapon Master deals massive damage from the start. A Variant Human Wizard with War Caster maintains concentration spells much more reliably. The flexibility is unmatched.",
+      "Good For": "Players who want maximum versatility and a strong start. Variant Human is the best choice when you have a specific build or Feat in mind. Standard Human is the simplest option if you want a straightforward, balanced character."
+    }
+  },
+  {
+    name: "Tiefling", icon: "&#x1F608;",
+    brief: "Humans with a devilish bloodline — born with horns and a tail, resistant to fire and gifted with dark magic.",
+    details: {
+      "Overview": "Tieflings are humans whose bloodline carries the taint of the Nine Hells. They are born with horns, a tail, solid-coloured eyes, and often reddish or purple skin. Despite their infernal appearance, Tieflings are not inherently evil — but they often face suspicion and prejudice, making them natural outsiders and wanderers.",
+      "Ability Scores": "+2 Charisma, +1 Intelligence.",
+      "Darkvision": "60 feet.",
+      "Hellish Resistance": "<span class='trait-label'>Resistance to fire damage.</span> Fire is the most common damage type dealt by monsters and traps in D&D, making this one of the most frequently useful resistances.",
+      "Infernal Legacy": "You know the <span class='trait-label'>Thaumaturgy</span> cantrip (minor magical effects — flickering lights, booming voice, trembling ground). At 3rd level you can cast <span class='trait-label'>Hellish Rebuke</span> once per day (when a creature damages you, you blast them with fire as a reaction — 2d10 fire damage). At 5th level you can cast <span class='trait-label'>Darkness</span> once per day (create a sphere of magical darkness).",
+      "Other Traits": "Size: Medium. Speed: 30 ft. Languages: Common, Infernal.",
+      "Good For": "Players who want a dramatic, visually striking character with useful innate magic and fire resistance. Tieflings excel as Warlocks, Sorcerers, Bards and Paladins thanks to their Charisma bonus."
+    }
+  }
+];
+
+const backgrounds = [
+  {
+    name: "Acolyte", icon: "&#x1F54A;&#xFE0F;",
+    brief: "Raised in a temple — knows religion deeply and has contacts in the church.",
+    details: {
+      "Overview": "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices.",
+      "Skill Proficiencies": "Insight, Religion.",
+      "Languages": "Two of your choice.",
+      "Equipment": "A holy symbol, a prayer book or prayer wheel, 5 sticks of incense, vestments, a set of common clothes, and a pouch containing 15 gp.",
+      "Feature — Shelter of the Faithful": "<span class='trait-label'>You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith.</span> Those who share your religion will support you at a modest lifestyle. You also have ties to the temple where you served and can call on the priests for assistance — provided the assistance you ask for is not hazardous and you remain in good standing.",
+      "Good For": "Clerics and Paladins who want a deeply religious backstory, or any character connected to a temple or faith."
+    }
+  },
+  {
+    name: "Charlatan", icon: "&#x1F3AD;",
+    brief: "A professional con artist skilled at disguise, forgery and fast talking their way out of trouble.",
+    details: {
+      "Overview": "You have always had a way with people. You know what makes them tick, you can tease out their hearts' desires after a few minutes of conversation, and with a few leading questions you can read them like they were children's books.",
+      "Skill Proficiencies": "Deception, Sleight of Hand.",
+      "Tool Proficiencies": "Disguise kit, forgery kit.",
+      "Equipment": "A set of fine clothes, a disguise kit, tools of the con of your choice (ten stoppered bottles filled with coloured liquid, a set of weighted dice, a deck of marked cards, or a signet ring of an imaginary duke), and a pouch containing 15 gp.",
+      "Feature — False Identity": "<span class='trait-label'>You have created a second identity that includes documentation, established acquaintances, and disguises that allow you to assume that persona.</span> Additionally, you can forge documents including official papers and personal letters, as long as you have seen an example of the kind of document or handwriting you are trying to copy.",
+      "Good For": "Rogues, Bards and Warlocks who want a deceptive, con-artist backstory. Great for social intrigue campaigns."
+    }
+  },
+  {
+    name: "Criminal", icon: "&#x1F5DD;&#xFE0F;",
+    brief: "A former thief with underworld contacts and a talent for stealth and deception.",
+    details: {
+      "Overview": "You are an experienced criminal with a history of breaking the law. You have spent a lot of time among other criminals and still have contacts within the criminal underworld. You're far closer than most people to the world of murder, theft, and violence.",
+      "Skill Proficiencies": "Deception, Stealth.",
+      "Tool Proficiencies": "One type of gaming set, thieves' tools.",
+      "Equipment": "A crowbar, a set of dark common clothes including a hood, and a pouch containing 15 gp.",
+      "Feature — Criminal Contact": "<span class='trait-label'>You have a reliable and trustworthy contact who acts as your liaison to a network of other criminals.</span> You know how to get messages to and from your contact, even over great distances. You know the local messengers, corrupt caravan masters, and seedy sailors who can deliver messages for you.",
+      "Good For": "Rogues are the natural fit, but any character with a shady past works — a Fighter who was an enforcer, a Warlock who made their pact to escape prison, etc."
+    }
+  },
+  {
+    name: "Entertainer", icon: "&#x1F3B5;",
+    brief: "A performer who charms crowds and is welcome in most taverns.",
+    details: {
+      "Overview": "You thrive in front of an audience. You know how to entrance them, entertain them, and even inspire them. Your poetics can stir the hearts of those who hear you, awakening grief or joy, laughter or anger.",
+      "Skill Proficiencies": "Acrobatics, Performance.",
+      "Tool Proficiencies": "Disguise kit, one type of musical instrument.",
+      "Equipment": "A musical instrument (one of your choice), the favour of an admirer (love letter, lock of hair, or trinket), a costume, and a pouch containing 15 gp.",
+      "Feature — By Popular Demand": "<span class='trait-label'>You can always find a place to perform — usually in an inn or tavern. You receive free lodging and food of a modest or comfortable standard in exchange for performing each night.</span> Your performance also makes you something of a local figure. When strangers recognise you in a town where you have performed, they typically take a liking to you.",
+      "Good For": "Bards obviously, but also any character who wants a flamboyant, crowd-pleasing backstory — a Monk who was an acrobat, a Sorcerer who performed magic tricks."
+    }
+  },
+  {
+    name: "Folk Hero", icon: "&#x1F33E;",
+    brief: "A common person who did something legendary — beloved by ordinary folk.",
+    details: {
+      "Overview": "You come from a humble social rank, but you are destined for so much more. Already the people of your home village regard you as their champion, and your destiny calls you to stand against the tyrants and monsters that threaten the common folk everywhere.",
+      "Skill Proficiencies": "Animal Handling, Survival.",
+      "Tool Proficiencies": "One type of artisan's tools, vehicles (land).",
+      "Equipment": "A set of artisan's tools (one of your choice), a shovel, an iron pot, a set of common clothes, and a pouch containing 10 gp.",
+      "Feature — Rustic Hospitality": "<span class='trait-label'>Since you come from the ranks of the common folk, you fit in among them with ease. You can find a place to hide, rest, or recuperate among other commoners, unless you have shown yourself to be a danger to them.</span> They will shield you from the law or anyone else searching for you, though they will not risk their lives for you.",
+      "Good For": "Any character who rose from humble origins. A Fighter or Barbarian who defended their village, a Paladin who swore an oath to protect the common folk."
+    }
+  },
+  {
+    name: "Guild Artisan", icon: "&#x1F528;",
+    brief: "A skilled craftsperson with merchant connections and a reputation for quality work.",
+    details: {
+      "Overview": "You are a member of an artisan's guild, skilled in a particular field and closely associated with other artisans. You are a well-established part of the mercantile world, freed by talent and wealth from the constraints of a feudal social order.",
+      "Skill Proficiencies": "Insight, Persuasion.",
+      "Tool Proficiencies": "One type of artisan's tools.",
+      "Languages": "One of your choice.",
+      "Equipment": "A set of artisan's tools (one of your choice), a letter of introduction from your guild, a set of traveller's clothes, and a pouch containing 15 gp.",
+      "Feature — Guild Membership": "<span class='trait-label'>Your guild offers lodging and food if necessary and pays for your funeral if needed. In some cities, a guildhall offers a central place to meet patrons, allies, or contacts.</span> Your guild supports you in legal trouble and provides political connections. You must pay 5 gp per month in dues.",
+      "Good For": "Characters with a trade or merchant background. Works well with any class — a Wizard who was a scribe, a Cleric who was a healer for hire, a Rogue who was a locksmith."
+    }
+  },
+  {
+    name: "Hermit", icon: "&#x1F3D5;&#xFE0F;",
+    brief: "A recluse who spent years alone, emerging with secret knowledge and medical skill.",
+    details: {
+      "Overview": "You lived in seclusion — either in a sheltered community such as a monastery, or entirely alone — for a formative part of your life. In your time apart from the clamour of society, you found quiet, solitude, and perhaps some of the answers you were looking for.",
+      "Skill Proficiencies": "Medicine, Religion.",
+      "Tool Proficiencies": "Herbalism kit.",
+      "Languages": "One of your choice.",
+      "Equipment": "A scroll case stuffed full of notes from your studies or prayers, a winter blanket, a set of common clothes, an herbalism kit, and 5 gp.",
+      "Feature — Discovery": "<span class='trait-label'>The quiet seclusion of your extended hermitage gave you access to a unique and powerful discovery.</span> The exact nature of this discovery depends on the nature of your seclusion. It might be a great truth, a hidden site, a long-forgotten fact, or unearthed some relic of the past. Work with your DM to determine the details.",
+      "Good For": "Druids, Monks, and Clerics who spent time in contemplation. Also great for any character with a mysterious past — a Warlock who retreated after making their pact, a Wizard researching forbidden magic."
+    }
+  },
+  {
+    name: "Noble", icon: "&#x1F451;",
+    brief: "Born into wealth and privilege — commands respect from high society and has powerful connections.",
+    details: {
+      "Overview": "You understand wealth, power, and privilege. You carry a noble title, and your family owns land, collects taxes, and wields significant political influence. You might be a pampered aristocrat or a former monarch in exile.",
+      "Skill Proficiencies": "History, Persuasion.",
+      "Tool Proficiencies": "One type of gaming set.",
+      "Languages": "One of your choice.",
+      "Equipment": "A set of fine clothes, a signet ring, a scroll of pedigree, and a purse containing 25 gp.",
+      "Feature — Position of Privilege": "<span class='trait-label'>Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and common folk make every effort to accommodate you and avoid your displeasure.</span> You can secure an audience with a local noble if you need to.",
+      "Good For": "Paladins, Fighters, Warlocks and Bards with an aristocratic background. Great for characters who start with social standing and political intrigue connections."
+    }
+  },
+  {
+    name: "Outlander", icon: "&#x26FA;",
+    brief: "Raised in the wilderness — expert at survival and living off the land.",
+    details: {
+      "Overview": "You grew up in the wilds, far from civilisation and the comforts of town and technology. You've witnessed the migration of herds larger than forests, survived weather more extreme than any city-dweller could comprehend, and enjoyed the solitude of being the only thinking creature for miles in any direction.",
+      "Skill Proficiencies": "Athletics, Survival.",
+      "Tool Proficiencies": "One type of musical instrument.",
+      "Languages": "One of your choice.",
+      "Equipment": "A staff, a hunting trap, a trophy from an animal you killed, a set of traveller's clothes, and a pouch containing 10 gp.",
+      "Feature — Wanderer": "<span class='trait-label'>You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.</span>",
+      "Good For": "Rangers, Barbarians, and Druids with a wilderness upbringing. Any character who grew up far from civilisation and is more at home in the wild than in a city."
+    }
+  },
+  {
+    name: "Sage", icon: "&#x1F4DC;",
+    brief: "A scholar who knows a little about everything and knows who to ask about the rest.",
+    details: {
+      "Overview": "You spent years learning the lore of the multiverse. You scoured manuscripts, studied scrolls, and listened to the greatest experts on the subjects that interest you. Your efforts have made you a master in your fields of study.",
+      "Skill Proficiencies": "Arcana, History.",
+      "Languages": "Two of your choice.",
+      "Equipment": "A bottle of black ink, a quill, a small knife, a letter from a dead colleague posing a question you have not yet been able to answer, a set of common clothes, and a pouch containing 10 gp.",
+      "Feature — Researcher": "<span class='trait-label'>When you attempt to learn or recall a piece of lore, if you do not know that information, you often know where and from whom you can obtain it.</span> Usually this comes from a library, scriptorium, university, or a sage or other learned person or creature. Your DM might rule that the knowledge you seek is secreted away in an almost inaccessible place, or that it simply cannot be found.",
+      "Good For": "Wizards are the obvious choice, but any knowledge-hungry character works. A Warlock researching their patron, a Cleric who was a theologian, a Rogue who specialised in acquiring rare texts."
+    }
+  },
+  {
+    name: "Sailor", icon: "&#x2693;",
+    brief: "A seasoned seafarer with friends in every port and a talent for navigation.",
+    details: {
+      "Overview": "You sailed on a seagoing vessel for years, working as a common sailor, captain, naval officer, or pirate. You have a deep familiarity with the sea and the craft of sailing, and the bonds formed at sea are strong ones.",
+      "Skill Proficiencies": "Athletics, Perception.",
+      "Tool Proficiencies": "Navigator's tools, vehicles (water).",
+      "Equipment": "A belaying pin (club), 50 feet of silk rope, a lucky charm, a set of common clothes, and a pouch containing 10 gp.",
+      "Feature — Ship's Passage": "<span class='trait-label'>When you need to, you can secure free passage on a sailing ship for yourself and your adventuring companions.</span> You might sail on the ship you served on, or another ship you have good relations with. Because you're calling in a favour, you can't be certain of a schedule or route. Your DM will determine how long it takes to get where you need to go. In return, you and your companions are expected to assist the crew during the voyage.",
+      "Good For": "Any character with a maritime history. A Fighter who was a marine, a Rogue who was a pirate, a Cleric of a sea god. Particularly thematic in coastal or island campaigns."
+    }
+  },
+  {
+    name: "Soldier", icon: "&#x1F396;&#xFE0F;",
+    brief: "A veteran fighter with military discipline and a talent for athletics and intimidation.",
+    details: {
+      "Overview": "War has been your life for as long as you care to remember. You trained as a youth, studied the use of weapons and armour, learned basic survival techniques, including how to stay alive on the battlefield. You might have been part of a standing national army, a mercenary company, or a local militia.",
+      "Skill Proficiencies": "Athletics, Intimidation.",
+      "Tool Proficiencies": "One type of gaming set, vehicles (land).",
+      "Equipment": "An insignia of rank, a trophy taken from a fallen enemy, a set of bone dice or a deck of cards, a set of common clothes, and a pouch containing 10 gp.",
+      "Feature — Military Rank": "<span class='trait-label'>You have a military rank from your career as a soldier. Soldiers loyal to your former military organisation still recognise your authority and influence.</span> You can invoke your rank to exert influence over other soldiers and requisition simple equipment or horses for temporary use. You can also usually gain access to friendly military encampments and fortresses.",
+      "Good For": "Fighters and Paladins are natural fits, but any class with a military past works — a Cleric who was an army chaplain, a Wizard who was a war mage, a Rogue who was a scout."
+    }
+  },
+  {
+    name: "Urchin", icon: "&#x1F3D9;&#xFE0F;",
+    brief: "A street kid who grew up fending for themselves — nimble, stealthy and knows every shortcut in the city.",
+    details: {
+      "Overview": "You grew up on the streets alone, orphaned, and poor. You had no one to watch over you or to provide for you, so you learned to provide for yourself. You fought fiercely over food and kept a constant watch out for other desperate souls who might steal from you.",
+      "Skill Proficiencies": "Sleight of Hand, Stealth.",
+      "Tool Proficiencies": "Disguise kit, thieves' tools.",
+      "Equipment": "A small knife, a map of the city you grew up in, a pet mouse, a token to remember your parents by, a set of common clothes, and a pouch containing 10 gp.",
+      "Feature — City Secrets": "<span class='trait-label'>You know the secret patterns and flow of cities and can find passages through the urban sprawl that others would miss.</span> When you are not in combat, you (and companions you lead) can travel between any two locations in the city twice as fast as your speed would normally allow.",
+      "Good For": "Rogues and Monks who grew up on the streets. Also great for any character with a \"rags to riches\" story — a Sorcerer whose powers manifested while living rough, a Warlock who made a pact to escape poverty."
+    }
+  }
+];
+
+// ─── STATE ───
+let selected = { class: null, race: null, background: null };
+
+// ─── RENDER ───
+function renderCards(containerId, data, category) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = data.map((item, i) => {
+    const detailsHTML = Object.entries(item.details).map(([key, val]) => {
+      if (typeof val === 'string') {
+        if (val.includes('◆') || val.startsWith('<ul>')) return `<h4>${key}</h4>${val}`;
+        return `<h4>${key}</h4><p>${val}</p>`;
+      }
+      return `<h4>${key}</h4><ul>${val.map(v => `<li>${v}</li>`).join('')}</ul>`;
+    }).join('');
+
+    return `
+      <div class="card" data-category="${category}" data-name="${item.name}" onclick="selectCard(this, '${category}', '${item.name}')">
+        <div class="card-check">&#x2713;</div>
+        <div class="card-top">
+          <div class="card-icon">${item.icon}</div>
+          <div>
+            <div class="card-title">${item.name}</div>
+            <div class="card-brief">${item.brief}</div>
+          </div>
+        </div>
+        <div class="card-expand" onclick="event.stopPropagation(); toggleDetails(this.closest('.card'))">
+          <span>View Details</span>
+          <span class="arrow">&#x25BC;</span>
+        </div>
+        <div class="card-details">
+          <div class="card-details-inner">${detailsHTML}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleDetails(card) {
+  card.classList.toggle('open');
+}
+
+function selectCard(card, category, name) {
+  // Deselect previous in this category
+  document.querySelectorAll(`.card[data-category="${category}"]`).forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selected[category] = name;
+  updateSummary();
+}
+
+function applyCombo(cls, race, bg) {
+  selected = { class: cls, race: race, background: bg };
+
+  // Select cards visually
+  ['class', 'race', 'background'].forEach(cat => {
+    document.querySelectorAll(`.card[data-category="${cat}"]`).forEach(c => {
+      c.classList.toggle('selected', c.dataset.name === selected[cat]);
+    });
+  });
+
+  updateSummary();
+
+  // Scroll to summary
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateSummary() {
+  const box = document.getElementById('selection-summary');
+  const hasAny = selected.class || selected.race || selected.background;
+
+  if (!hasAny) {
+    box.innerHTML = '<div class="placeholder">Make your selections above&hellip;</div>';
+    return;
+  }
+
+  const lines = [];
+  if (selected.race) lines.push(`<div class="selection-line"><span class="sel-label">Race:</span> <span class="sel-value">${selected.race}</span></div>`);
+  if (selected.class) lines.push(`<div class="selection-line"><span class="sel-label">Class:</span> <span class="sel-value">${selected.class}</span></div>`);
+  if (selected.background) lines.push(`<div class="selection-line"><span class="sel-label">Background:</span> <span class="sel-value">${selected.background}</span></div>`);
+  box.innerHTML = lines.join('');
+}
+
+function buildCopyText() {
+  const player = document.getElementById('player-name').value.trim();
+  const character = document.getElementById('char-name').value.trim();
+  let text = '--- D&D CHARACTER PICK ---\n';
+  if (player) text += `Player: ${player}\n`;
+  if (character) text += `Character Name: ${character}\n`;
+  if (selected.race) text += `Race: ${selected.race}\n`;
+  if (selected.class) text += `Class: ${selected.class}\n`;
+  if (selected.background) text += `Background: ${selected.background}\n`;
+  text += '---';
+  return text;
+}
+
+function copyToClipboard() {
+  const text = buildCopyText();
+  navigator.clipboard.writeText(text).then(() => {
+    const msg = document.getElementById('copied-msg');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2000);
+  });
+}
+
+function resetAll() {
+  selected = { class: null, race: null, background: null };
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('player-name').value = '';
+  document.getElementById('char-name').value = '';
+  updateSummary();
+}
+
+// ─── INIT ───
+renderCards('class-grid', classes, 'class');
+renderCards('race-grid', races, 'race');
+renderCards('bg-grid', backgrounds, 'background');
+
+// ─── NAV ACTIVE STATE ───
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section[id], .summary-section');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+
+document.querySelectorAll('#combos, #classes, #races, #backgrounds, #summary').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
