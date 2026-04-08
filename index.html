@@ -614,6 +614,8 @@ h2 {
 .card:nth-child(11) { animation-delay: 0.22s; }
 .card:nth-child(12) { animation-delay: 0.24s; }
 .card:nth-child(13) { animation-delay: 0.26s; }
+.card:nth-child(14) { animation-delay: 0.28s; }
+.card:nth-child(15) { animation-delay: 0.30s; }
 </style>
 </head>
 <body>
@@ -651,17 +653,17 @@ h2 {
     </div>
     <div class="combo-card" onclick="applyCombo('Paladin','Half-Elf','Noble')">
       <div class="combo-label">Classic Hero</div>
-      <div class="combo-name">Paladin + Half-Elf + Noble</div>
+      <div class="combo-name">Paladin + Half&#8209;Elf + Noble</div>
       <div class="combo-detail">Shining knight archetype</div>
     </div>
-    <div class="combo-card" onclick="applyCombo('Rogue','Halfling','Criminal')">
+    <div class="combo-card" onclick="applyCombo('Rogue','Halfling (Lightfoot)','Criminal')">
       <div class="combo-label">Sneaky Rogue</div>
-      <div class="combo-name">Rogue + Halfling + Criminal</div>
+      <div class="combo-name">Rogue + Lightfoot Halfling + Criminal</div>
       <div class="combo-detail">Stealth and trickery</div>
     </div>
-    <div class="combo-card" onclick="applyCombo('Wizard','Elf','Sage')">
+    <div class="combo-card" onclick="applyCombo('Wizard','Elf (High)','Sage')">
       <div class="combo-label">Powerful Mage</div>
-      <div class="combo-name">Wizard + Elf + Sage</div>
+      <div class="combo-name">Wizard + High Elf + Sage</div>
       <div class="combo-detail">Arcane mastery</div>
     </div>
   </div>
@@ -913,44 +915,109 @@ const races = [
     }
   },
   {
-    name: "Dwarf", icon: "&#x26CF;&#xFE0F;",
-    brief: "Tough, stubborn mountain folk with a resistance to poison and a natural gift for stonework and combat.",
+    name: "Dwarf (Hill)", icon: "&#x26CF;&#xFE0F;",
+    brief: "The classic dwarf — tough, wise and hardy, with extra hit points and a knack for history and healing.",
     details: {
-      "Overview": "Dwarves are short, stocky and tough — standing around 4 to 5 feet tall but weighing as much as a human. They are known for their craftsmanship, love of mining and brewing, and their stubborn determination. Dwarves live for centuries and have long memories.",
-      "Ability Scores": "+2 Constitution. Subraces add more: Hill Dwarf gets +1 Wisdom, Mountain Dwarf gets +2 Strength.",
+      "Overview": "Hill Dwarves are the most common dwarven subrace — stout, tough and deeply traditional. They are slightly more attuned to the natural world than their mountain kin and possess an almost supernatural resilience, gaining extra hit points at every level that make them the tankiest race choice in the game.",
+      "Ability Scores": "+2 Constitution, +1 Wisdom. Excellent for Clerics, Druids and any character who wants to be hard to kill.",
       "Darkvision": "You can see 60 feet in dim light as if bright, and in darkness as if dim light (greyscale only).",
       "Dwarven Resilience": "<span class='trait-label'>Advantage on saving throws against poison, and resistance to poison damage.</span> One of the best racial defensive traits in the game.",
+      "Dwarven Toughness": "<span class='trait-label'>Your hit point maximum increases by 1 for every level you gain.</span> At level 10 that's 10 extra HP on top of everything else — stacked with a d8 or d10 hit die, you become incredibly durable.",
       "Dwarven Combat Training": "Proficiency with battleaxe, handaxe, light hammer and warhammer regardless of class.",
-      "Stonecunning": "Whenever you make an Intelligence (History) check related to stonework, you add double your proficiency bonus.",
-      "Subraces": "<span class='trait-label'>Hill Dwarf</span> — +1 Wisdom, +1 extra hit point per level (very tanky). Excellent for Clerics and Druids. <span class='trait-label'>Mountain Dwarf</span> — +2 Strength, proficiency with light and medium armour. One of the best martial race options, and lets casters wear armour they normally can't.",
-      "Good For": "Players who want a durable, resilient character. Hill Dwarf Cleric and Mountain Dwarf Fighter are iconic, reliable choices."
+      "Stonecunning": "Double proficiency bonus on Intelligence (History) checks related to stonework.",
+      "Other Traits": "Size: Medium (4-5 ft). Speed: 25 ft (not reduced by heavy armour). Languages: Common, Dwarvish.",
+      "Good For": "The go-to choice for Clerics — the Wisdom bonus and extra HP per level make Hill Dwarf Cleric one of the most iconic and effective builds in D&D. Also great for Druids and any character who wants maximum survivability."
     }
   },
   {
-    name: "Elf", icon: "&#x1F9DD;",
-    brief: "Ancient, graceful beings with sharp senses and a natural resistance to sleep and charm.",
+    name: "Dwarf (Mountain)", icon: "&#x26CF;&#xFE0F;",
+    brief: "A stronger, more martial dwarf built for heavy armour and frontline combat.",
     details: {
-      "Overview": "Elves are graceful, long-lived beings who can live for over 700 years. They are slender, standing 5 to 6 feet tall, and possess an otherworldly beauty and agility. Elves are deeply connected to nature and magic, and their long lifespans give them a patient, measured perspective.",
-      "Ability Scores": "+2 Dexterity. Subraces add: High Elf +1 Intelligence, Wood Elf +1 Wisdom, Dark Elf (Drow) +1 Charisma.",
-      "Darkvision": "60 feet.",
-      "Keen Senses": "Proficiency in the Perception skill (the most commonly used skill in the game).",
-      "Fey Ancestry": "<span class='trait-label'>Advantage on saving throws against being charmed, and magic can't put you to sleep.</span> Extremely useful against many monster abilities.",
-      "Trance": "Elves don't need to sleep. Instead, they meditate for 4 hours, gaining the same benefit as 8 hours of sleep.",
-      "Subraces": "<span class='trait-label'>High Elf</span> — +1 Intelligence, one Wizard cantrip of your choice, extra language. Great for Wizards. <span class='trait-label'>Wood Elf</span> — +1 Wisdom, 35 ft speed (fastest standard race), can hide in light natural cover. Superb Rangers and Druids. <span class='trait-label'>Dark Elf (Drow)</span> — +1 Charisma, 120 ft Darkvision, Faerie Fire and Darkness spells. Powerful but with Sunlight Sensitivity.",
-      "Good For": "Players who want an agile, perceptive character with strong defences against mind-affecting magic. Elves pair well with nearly any Dexterity-based class."
+      "Overview": "Mountain Dwarves are the warrior aristocracy of dwarven society — taller, stronger and more martially trained than their hill cousins. They are accustomed to life in the high mountains, where they build fortress-cities of stone and steel.",
+      "Ability Scores": "+2 Constitution, +2 Strength. One of the only races with two +2 bonuses, making them exceptional martial characters.",
+      "Darkvision": "You can see 60 feet in dim light as if bright, and in darkness as if dim light (greyscale only).",
+      "Dwarven Resilience": "<span class='trait-label'>Advantage on saving throws against poison, and resistance to poison damage.</span>",
+      "Dwarven Armour Training": "<span class='trait-label'>Proficiency with light and medium armour.</span> This is huge for classes that don't normally get armour — a Mountain Dwarf Wizard or Sorcerer can wear half-plate (AC 15 + Dex) without multiclassing, dramatically improving survivability.",
+      "Dwarven Combat Training": "Proficiency with battleaxe, handaxe, light hammer and warhammer regardless of class.",
+      "Stonecunning": "Double proficiency bonus on Intelligence (History) checks related to stonework.",
+      "Other Traits": "Size: Medium (4-5 ft). Speed: 25 ft (not reduced by heavy armour). Languages: Common, Dwarvish.",
+      "Good For": "Fighters, Barbarians and Paladins get the full benefit of the Strength and Constitution bonuses. But the real trick is using Mountain Dwarf for spellcasters — a Wizard in medium armour is far harder to kill."
     }
   },
   {
-    name: "Gnome", icon: "&#x1F9D9;",
-    brief: "Tiny, endlessly curious tinkerers with a knack for illusion magic and resistance to mental effects.",
+    name: "Elf (High)", icon: "&#x1F9DD;",
+    brief: "A refined, intellectual elf with a bonus cantrip spell and a sharp mind.",
     details: {
-      "Overview": "Gnomes are the smallest of the standard races, standing 3 to 4 feet tall. They are endlessly curious, inventive and enthusiastic, with a love of life that borders on manic. Gnomes live around 350 to 500 years and spend much of that time tinkering, experimenting and exploring.",
-      "Ability Scores": "+2 Intelligence. Rock Gnome gets +1 Constitution, Forest Gnome gets +1 Dexterity.",
+      "Overview": "High Elves are the most magically inclined of the elven subraces. They value knowledge and study, and every High Elf learns at least a touch of arcane magic. They are often found in grand cities of marble and crystal, pursuing centuries of scholarly work.",
+      "Ability Scores": "+2 Dexterity, +1 Intelligence. Ideal for Wizards and Eldritch Knights.",
       "Darkvision": "60 feet.",
-      "Gnome Cunning": "<span class='trait-label'>Advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</span> This is one of the strongest racial traits in the game — it protects you against the vast majority of dangerous spells.",
-      "Size": "Small (3-4 ft). This means you can't use Heavy weapons (greatsword, greataxe) without disadvantage, but you can move through the space of larger creatures.",
-      "Subraces": "<span class='trait-label'>Rock Gnome</span> — +1 Constitution, proficiency with tinker's tools, and you can build tiny clockwork devices (a toy, fire starter, or music box). Fun for roleplay and creativity. <span class='trait-label'>Forest Gnome</span> — +1 Dexterity, the Minor Illusion cantrip for free, and you can communicate simple ideas with Small or smaller beasts.",
-      "Good For": "Players who want a quirky, clever character with outstanding magical defences. Forest Gnome makes an excellent Wizard, and Gnome Cunning is universally useful."
+      "Keen Senses": "Proficiency in the Perception skill.",
+      "Fey Ancestry": "<span class='trait-label'>Advantage on saving throws against being charmed, and magic can't put you to sleep.</span>",
+      "Trance": "Elves meditate for 4 hours instead of sleeping for 8 — you're conscious during your rest.",
+      "Cantrip": "<span class='trait-label'>You know one cantrip of your choice from the Wizard spell list.</span> Popular choices: Fire Bolt (ranged damage), Minor Illusion (creative utility), Booming Blade (melee damage boost). This is free magic for any class.",
+      "Extra Language": "You speak, read and write one extra language of your choice.",
+      "Other Traits": "Size: Medium (5-6 ft). Speed: 30 ft. Languages: Common, Elvish + one more.",
+      "Good For": "The classic Wizard race — Intelligence bonus, a free cantrip, and elven defensive traits. Also excellent for any class that benefits from a free Wizard cantrip."
+    }
+  },
+  {
+    name: "Elf (Wood)", icon: "&#x1F9DD;",
+    brief: "A swift, stealthy elf at home in forests, able to move faster and hide in nature easily.",
+    details: {
+      "Overview": "Wood Elves are the most reclusive and nature-attuned of the elven subraces. They live deep in ancient forests, moving through the trees with a speed and stealth that borders on supernatural. They are the fastest of the standard races.",
+      "Ability Scores": "+2 Dexterity, +1 Wisdom. Perfect for Rangers, Druids and Monks.",
+      "Darkvision": "60 feet.",
+      "Keen Senses": "Proficiency in the Perception skill.",
+      "Fey Ancestry": "<span class='trait-label'>Advantage on saving throws against being charmed, and magic can't put you to sleep.</span>",
+      "Trance": "Elves meditate for 4 hours instead of sleeping for 8.",
+      "Fleet of Foot": "<span class='trait-label'>Your base walking speed is 35 feet.</span> This is the fastest standard race speed in the game — you outrun everyone else and can kite enemies or reach objectives faster.",
+      "Mask of the Wild": "<span class='trait-label'>You can attempt to hide even when only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.</span> This makes you an exceptional scout and ambusher.",
+      "Other Traits": "Size: Medium (5-6 ft). Speed: 35 ft. Languages: Common, Elvish.",
+      "Good For": "The best Ranger race in the PHB — Dexterity, Wisdom, speed and natural stealth. Also superb for Druids, Monks and any stealthy build."
+    }
+  },
+  {
+    name: "Elf (Drow)", icon: "&#x1F9DD;",
+    brief: "A dark elf from the underground — naturally gifted with magic but sensitive to sunlight.",
+    details: {
+      "Overview": "Drow (Dark Elves) hail from the Underdark, a vast network of caverns and tunnels beneath the surface. Their society is known for its cruelty and worship of the spider goddess Lolth, but player character Drow are typically outcasts or rebels who have rejected that dark culture.",
+      "Ability Scores": "+2 Dexterity, +1 Charisma. Great for Warlocks, Sorcerers, Bards and Paladins.",
+      "Superior Darkvision": "<span class='trait-label'>120 feet of Darkvision</span> — double the range of other races. You can see in near-total darkness.",
+      "Keen Senses": "Proficiency in the Perception skill.",
+      "Fey Ancestry": "Advantage on saving throws against being charmed, and magic can't put you to sleep.",
+      "Trance": "Elves meditate for 4 hours instead of sleeping for 8.",
+      "Sunlight Sensitivity": "<span class='trait-label'>You have disadvantage on attack rolls and Perception checks that rely on sight when you, the target, or what you're trying to see is in direct sunlight.</span> This is a significant drawback in outdoor adventures — discuss it with your DM.",
+      "Drow Magic": "You know the <span class='trait-label'>Dancing Lights</span> cantrip. At 3rd level you can cast <span class='trait-label'>Faerie Fire</span> once per day (outline creatures in light — attacks against them have advantage). At 5th level you can cast <span class='trait-label'>Darkness</span> once per day.",
+      "Other Traits": "Size: Medium (5-6 ft). Speed: 30 ft. Languages: Common, Elvish.",
+      "Good For": "Players who love a dramatic backstory. The innate spells (especially Faerie Fire) are powerful, and the Charisma bonus suits many classes. Be aware of Sunlight Sensitivity as a real mechanical cost."
+    }
+  },
+  {
+    name: "Gnome (Forest)", icon: "&#x1F9D9;",
+    brief: "A tiny, whimsical gnome who can speak to small animals and conjure minor illusions.",
+    details: {
+      "Overview": "Forest Gnomes are the most reclusive of gnomekind, living in hidden communities deep in the woods. They have a natural affinity for illusion magic and a unique ability to communicate with small woodland creatures.",
+      "Ability Scores": "+2 Intelligence, +1 Dexterity. Good for Wizards, Rogues and ranged builds.",
+      "Darkvision": "60 feet.",
+      "Gnome Cunning": "<span class='trait-label'>Advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</span> One of the strongest racial traits in the game — you resist the vast majority of dangerous spells.",
+      "Natural Illusionist": "<span class='trait-label'>You know the Minor Illusion cantrip.</span> This is a fantastically creative cantrip — you can create sounds or images to distract guards, fake a wall, imitate voices, and more. Intelligence is your spellcasting ability for it.",
+      "Speak with Small Beasts": "<span class='trait-label'>Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts.</span> Great for scouting with birds, befriending mice, or gathering information from forest creatures.",
+      "Other Traits": "Size: Small (3-4 ft). Speed: 25 ft. Languages: Common, Gnomish. Can't use Heavy weapons effectively.",
+      "Good For": "Wizards benefit from the Intelligence bonus and Gnome Cunning. The free Minor Illusion cantrip adds creative options for any class. Also fun for Druids and Rangers with a woodland theme."
+    }
+  },
+  {
+    name: "Gnome (Rock)", icon: "&#x1F9D9;",
+    brief: "A mechanical-minded gnome with a talent for tinkering and a knack for figuring out how things work.",
+    details: {
+      "Overview": "Rock Gnomes are the inventors and engineers of gnomekind. They are endlessly curious about how things work and are renowned for their clockwork gadgets, explosive experiments and boundless enthusiasm for all things mechanical.",
+      "Ability Scores": "+2 Intelligence, +1 Constitution. A solid, durable caster option.",
+      "Darkvision": "60 feet.",
+      "Gnome Cunning": "<span class='trait-label'>Advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</span> One of the strongest racial traits in the game.",
+      "Artificer's Lore": "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you add double your proficiency bonus.",
+      "Tinker": "<span class='trait-label'>Using tinker's tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 HP).</span> You can build: a Clockwork Toy (moves 5 ft each turn, makes noise), a Fire Starter (produces a miniature flame, like a lighter), or a Music Box (plays a single song at a moderate volume). Fun for roleplay, distractions and creative problem-solving.",
+      "Other Traits": "Size: Small (3-4 ft). Speed: 25 ft. Languages: Common, Gnomish. Can't use Heavy weapons effectively.",
+      "Good For": "Wizards and Artificers who love the inventor archetype. The Constitution bonus makes you slightly tougher than Forest Gnome. The Tinker ability is pure fun and flavour."
     }
   },
   {
@@ -982,30 +1049,56 @@ const races = [
     }
   },
   {
-    name: "Halfling", icon: "&#x1F340;",
-    brief: "Cheerful, lucky small folk who can reroll unlucky dice — surprisingly great at dodging danger.",
+    name: "Halfling (Lightfoot)", icon: "&#x1F340;",
+    brief: "The sneakier halfling — charming and good at hiding, even behind other people.",
     details: {
-      "Overview": "Halflings are small, cheerful folk who stand about 3 feet tall. They are known for their good nature, their love of comfort and simple pleasures, and an uncanny knack for avoiding danger. Halflings are practical, resourceful and surprisingly brave when the need arises.",
-      "Ability Scores": "+2 Dexterity. Lightfoot gets +1 Charisma, Stout gets +1 Constitution.",
-      "Lucky": "<span class='trait-label'>When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</span> This is one of the most consistently useful racial traits in the game — you will never critically fumble an important roll again.",
+      "Overview": "Lightfoot Halflings are the most common and social of halflings. They are naturally charming and have an uncanny ability to disappear from sight — even hiding behind creatures only slightly larger than themselves. They are wanderers and storytellers at heart.",
+      "Ability Scores": "+2 Dexterity, +1 Charisma. Excellent for Rogues, Bards and any social character.",
+      "Lucky": "<span class='trait-label'>When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</span> One of the most consistently useful traits in the game.",
       "Brave": "Advantage on saving throws against being frightened.",
-      "Halfling Nimbleness": "You can move through the space of any creature that is a size larger than you. Useful for navigating crowded battlefields.",
-      "Size": "Small (about 3 ft). Can't effectively use Heavy weapons.",
-      "Subraces": "<span class='trait-label'>Lightfoot</span> — +1 Charisma, and you can hide behind a creature one size larger than you (Naturally Stealthy). Ideal for Rogues. <span class='trait-label'>Stout</span> — +1 Constitution, advantage on saves against poison and resistance to poison damage (similar to Dwarves). Durable and reliable.",
-      "Good For": "Players who want a lucky, nimble character who always seems to dodge disaster. Lightfoot Halfling Rogue is a classic combination. The Lucky trait benefits every class."
+      "Halfling Nimbleness": "You can move through the space of any creature that is a size larger than you.",
+      "Naturally Stealthy": "<span class='trait-label'>You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.</span> In combat, you can hide behind an ally — then pop out for a Sneak Attack. This is the signature Lightfoot trait and it's phenomenal for Rogues.",
+      "Other Traits": "Size: Small (about 3 ft). Speed: 25 ft. Languages: Common, Halfling. Can't use Heavy weapons effectively.",
+      "Good For": "The classic Rogue race — Dexterity, Charisma, Lucky to avoid fumbles, and Naturally Stealthy for constant hiding opportunities. Also great for Bards and any character who relies on being sneaky and charming."
+    }
+  },
+  {
+    name: "Halfling (Stout)", icon: "&#x1F340;",
+    brief: "A tougher halfling with dwarven blood, resistant to poison and a bit more durable.",
+    details: {
+      "Overview": "Stout Halflings are hardier than their Lightfoot cousins, rumoured to have dwarven blood in their ancestry. They are more resilient and resistant to toxins, making them tougher and more durable while retaining the signature halfling luck.",
+      "Ability Scores": "+2 Dexterity, +1 Constitution. A solid, durable choice for any Dexterity-based build.",
+      "Lucky": "<span class='trait-label'>When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</span>",
+      "Brave": "Advantage on saving throws against being frightened.",
+      "Halfling Nimbleness": "You can move through the space of any creature that is a size larger than you.",
+      "Stout Resilience": "<span class='trait-label'>Advantage on saving throws against poison, and resistance to poison damage.</span> The same defensive trait that makes Dwarves so durable. Combined with Lucky, you are very hard to take down.",
+      "Other Traits": "Size: Small (about 3 ft). Speed: 25 ft. Languages: Common, Halfling. Can't use Heavy weapons effectively.",
+      "Good For": "Players who want the halfling luck and nimbleness with added toughness. Great for Fighters, Rangers and Monks who want a small but resilient character. Stout Resilience stacks well with any front-line build."
     }
   },
   {
     name: "Human", icon: "&#x1F9D1;",
-    brief: "The jack-of-all-trades — gets a bonus to every stat and an extra feat, making any class work well.",
+    brief: "The jack-of-all-trades — gets a small bonus to every stat, making any class work well.",
     details: {
-      "Overview": "Humans are the most common and adaptable race in D&D. They lack the special abilities of other races but compensate with sheer versatility. Humans are ambitious, diverse and driven — and they make excellent members of any class.",
-      "Ability Scores (Standard)": "+1 to all six ability scores. No other race improves every stat, making Humans work with any class and any build.",
-      "Variant Human (Optional Rule)": "<span class='trait-label'>+1 to two ability scores of your choice, one extra skill proficiency, and one Feat at 1st level.</span> Variant Human is widely considered one of the strongest race options in the game because Feats (like Great Weapon Master, Sharpshooter, or Lucky) are enormously powerful abilities that most characters don't get until level 4.",
+      "Overview": "Humans are the most common and adaptable race in D&D. They lack the special abilities of other races but compensate with sheer versatility. Standard Humans get a +1 to every ability score, making them work with any class and any build without waste.",
+      "Ability Scores": "<span class='trait-label'>+1 to all six ability scores (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma).</span> No other race improves every stat. This means no matter what class you pick, your stats will be solid across the board.",
       "Languages": "Common and one extra language of your choice.",
       "Other Traits": "Size: Medium. Speed: 30 ft.",
-      "Why Variant Human?": "Getting a Feat at level 1 can define your entire character. A Variant Human Fighter with Great Weapon Master deals massive damage from the start. A Variant Human Wizard with War Caster maintains concentration spells much more reliably. The flexibility is unmatched.",
-      "Good For": "Players who want maximum versatility and a strong start. Variant Human is the best choice when you have a specific build or Feat in mind. Standard Human is the simplest option if you want a straightforward, balanced character."
+      "Why Standard Human?": "The simplicity is the appeal. You don't need to think about synergies or optimisation — every stat goes up, every class works. If you're brand new to D&D and just want to play without worrying about builds, Standard Human is the easiest, safest pick.",
+      "Good For": "Brand-new players who want simplicity, or any build where you need multiple ability scores to be decent (like a Monk who needs Dexterity, Wisdom and Constitution all to be good)."
+    }
+  },
+  {
+    name: "Human (Variant)", icon: "&#x1F9D1;",
+    brief: "A more focused human who skips the stat spread in favour of a powerful feat and two chosen skills.",
+    details: {
+      "Overview": "The Variant Human is an optional rule from the PHB that trades the Standard Human's +1 to all stats for a much more powerful package: two chosen ability score increases, an extra skill, and a Feat at level 1. This is widely considered one of the strongest race options in the entire game.",
+      "Ability Scores": "<span class='trait-label'>+1 to two different ability scores of your choice.</span> You pick exactly the stats your build needs.",
+      "Bonus Skill": "<span class='trait-label'>Proficiency in one skill of your choice.</span> Extra skills are always useful.",
+      "Bonus Feat": "<span class='trait-label'>You gain one Feat of your choice at 1st level.</span> This is the headline ability. Feats are powerful abilities that most characters don't get until level 4 (and even then at the cost of an ability score increase). Getting one at level 1 can define your entire character.",
+      "Popular Feat Choices": "<span class='trait-label'>Great Weapon Master</span> — take -5 to hit for +10 damage with heavy weapons. <span class='trait-label'>Sharpshooter</span> — same but for ranged weapons. <span class='trait-label'>Sentinel</span> — punish enemies who try to move past you. <span class='trait-label'>War Caster</span> — advantage on concentration saves, cast spells as opportunity attacks. <span class='trait-label'>Lucky</span> — reroll 3 dice per day. <span class='trait-label'>Polearm Master</span> — bonus action attack and opportunity attacks at reach.",
+      "Other Traits": "Size: Medium. Speed: 30 ft. Languages: Common and one extra.",
+      "Good For": "Experienced players or anyone with a specific build in mind. Variant Human Fighter with Great Weapon Master, Variant Human Wizard with War Caster, Variant Human Rogue with Lucky — the combinations are endless and always powerful. Ask your DM if Variant Human is allowed (it's optional)."
     }
   },
   {
